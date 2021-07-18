@@ -1,26 +1,69 @@
 import { React, useEffect } from "react";
 import Header from "../Header";
-import { makeStyles, Box } from "@material-ui/core/";
+import { makeStyles, Box, Typography, Avatar, Paper } from "@material-ui/core/";
 import { useDispatch, useSelector } from "react-redux";
 import { requestProfile } from "../../store/auth/authActions";
+import Post from "../posts/Post";
 
-const Main = () => {
+const Profile = () => {
+  const profile = useSelector((state) => state.auth.userBody);
+  console.log(profile);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(requestProfile());
+    if (!Object.keys(profile).length) {
+      dispatch(requestProfile());
+    } else {
+      console.log("Profile get!");
+    }
   });
-  // const user = useSelector((state) => state.auth.userBody);
-  const useStyles = makeStyles({});
+  console.log(profile.posts, "posts");
+  const useStyles = makeStyles({
+    Main: {
+    },
+    User: {
+      position: 'relative',
+      margin:20,
+      width: 500,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      
+    },
+    Posts:{
+      display: "flex",
+      flexDirection: 'column',
+      alignItems: "center",
+      justifyContent: "center",
+    }
+ 
+  });
 
   const classes = useStyles();
 
-  // if (!user.length) {
-  //   dispatch(requestProfile());
-  // }
   return (
-    <Box className={classes.wrapper}>
+    <Box className={classes.Main}>
       <Header />
+      <Box className={classes.Posts}>
+      <Paper elevation={11} className={classes.User}>
+        <Avatar
+          alt="Remy Sharp"
+          src="https://api.memegen.link/images/doge/such_meme/very_skill.png"
+          ml={0}
+        />
+        <Box>
+          <Typography variant="h5" color="textSecondary"> Email: {profile.email} </Typography>
+          <Typography variant="h5"> user ID: {profile.id} </Typography>
+        </Box>
+      </Paper>
+      
+        <Typography variant="h4"> User {profile.email} All posts:</Typography>
+        {profile.posts ? (
+          profile.posts.map((post) => <Post post={post} key={post.id} />)
+        ) : (
+          <Typography> Posts empety </Typography>
+        )}
+      </Box>
     </Box>
   );
 };
-export default Main;
+export default Profile;

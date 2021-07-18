@@ -4,7 +4,7 @@ const INITIAL_STATE = {
   isLogined: false,
   error: null,
   allPosts: [],
-  userBody: [],
+  userBody: {},
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {

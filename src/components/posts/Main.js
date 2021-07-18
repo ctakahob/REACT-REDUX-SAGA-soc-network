@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Post from "./Post";
 import Header from "../Header";
 import { Paper, makeStyles, Box } from "@material-ui/core/";
@@ -6,9 +6,15 @@ import { fetchPosts } from "../../store/auth/authActions";
 import { useDispatch, useSelector, connect } from "react-redux";
 import Postform from "./AddPostForm";
 
+
 const Main = () => {
   const dispatch = useDispatch();
+
   const posts = useSelector((state) => state.auth.allPosts);
+  useEffect(() => {
+    if(!posts.length){dispatch(fetchPosts());}
+    
+  });
   const useStyles = makeStyles({
     root: {
       background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -28,9 +34,7 @@ const Main = () => {
     },
   });
   const classes = useStyles();
-  if (!posts.length) {
-    dispatch(fetchPosts());
-  }
+ 
   return (
     <Box className={classes.wrapper}>
       <Header />

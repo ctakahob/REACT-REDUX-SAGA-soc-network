@@ -35,8 +35,8 @@ const Post = (props) => {
           <Typography>description:</Typography>
           <Typography>{props.post.description}</Typography>
         </CardContent>
-        <Typography>coments:</Typography>
-        <Typography>{props.post.comments.length}</Typography>
+         { (props.post.comments) ? <Box> <Typography> coments: </Typography>
+        <Typography>{props.post.comments.length}</Typography></Box> : null }
       </Card>
     </Box>
   );
