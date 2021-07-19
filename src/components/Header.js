@@ -20,7 +20,7 @@ const Header = () => {
       <Toolbar>
         <NavLink
           className={classes.Link}
-          to="/main"
+          to="/"
           activeStyle={{
             fontWeight: "bold",
             color: "green",

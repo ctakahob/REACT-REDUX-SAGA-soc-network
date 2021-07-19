@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   error: null,
   allPosts: [],
   userBody: {},
+  currentPost: {},
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -20,6 +21,9 @@ const authReducer = (state = INITIAL_STATE, action) => {
 
     case types.FETCH_PROFILE:
       return { ...state, userBody: action.payload };
+
+    case types.FETCH_POST:
+      return { ...state, currentPost: action.payload };
 
     case types.LOG_IN_FAILURE:
     case types.REGISTER_FAILURE:

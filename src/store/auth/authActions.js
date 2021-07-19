@@ -47,9 +47,9 @@ export const registerFailure = (error) => ({
   payload: error,
 });
 
-export const getallPosts = (data) => ({
-  type: types.GET_ALL_POSTS,
-  payload: data,
+export const getPostToId = (path) => ({
+  type: types.REQUEST_POST,
+  payload: path,
 });
 
 export const logOut = () => ({

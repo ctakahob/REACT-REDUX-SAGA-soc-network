@@ -49,6 +49,8 @@ const getAllPosts = async () => {
 export function* sagaWatcher() {
   yield takeEvery(types.REQUEST_POSTS, sagaWorker);
   yield takeEvery(types.REQUEST_PROFILE, profileWorker);
+  yield takeEvery(types.ADD_POST_REQUEST, postWorker);
+  yield takeEvery(types.REQUEST_POST, postRequestWorker);
 }
 
 function* sagaWorker() {
@@ -72,9 +74,6 @@ const getProfile = async () => {
   console.log(response.data);
   return response.data;
 };
-// export function* profileWatcher() {
-
-// }
 
 function* profileWorker() {
   try {
@@ -99,10 +98,6 @@ const addPost = async (title, description) => {
   return response.data;
 };
 
-export function* postaddWatcher() {
-  yield takeEvery(types.ADD_POST_REQUEST, postWorker);
-}
-
 function* postWorker({ payload: { title, description } }) {
   try {
     console.log("Start");
@@ -110,6 +105,32 @@ function* postWorker({ payload: { title, description } }) {
     console.log("add post");
     yield put({ type: types.REQUEST_POSTS });
     console.log("REQUEST_POSTS");
+  } catch (error) {
+    return console.error;
+  }
+}
+
+const getPost = async (path) => {
+  console.log(path);
+  let jwtKey = localStorage.getItem("Authorization");
+  let key = JSON.parse(jwtKey);
+  let config = {
+    headers: {
+      Authorization: key,
+    },
+  };
+  const response = await axios.get(loginUrl + "/posts" + path, config);
+  console.log(response);
+  return response.data;
+};
+
+function* postRequestWorker({ payload }) {
+  try {
+    console.log("Start", payload);
+    const post = yield getPost(payload);
+    console.log("post Request", post);
+    yield put({ type: types.FETCH_POST, post });
+    console.log("FETCH_ONE_POST :", post);
   } catch (error) {
     return console.error;
   }
@@ -155,7 +176,5 @@ export function* authSagas() {
     call(onRegisterStart),
     call(onRegisterSuccess),
     call(sagaWatcher),
-    call(postaddWatcher),
-    // call(profileWatcher),
   ]);
 }

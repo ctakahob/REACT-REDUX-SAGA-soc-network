@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import {
   Card,
   makeStyles,
@@ -15,6 +16,7 @@ const Post = (props) => {
       margin: 5,
       boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     },
+    Link: { textDecoration: "none" },
   }));
   const classes = useStyles();
 
@@ -26,18 +28,30 @@ const Post = (props) => {
       justifyContent="center"
       width={1}
     >
-      <Card className={classes.Card} id={props.post.id}>
-        <CardContent>
-          <Typography>title:</Typography>
-          <Typography>{props.post.title}</Typography>
-        </CardContent>
-        <CardContent>
-          <Typography>description:</Typography>
-          <Typography>{props.post.description}</Typography>
-        </CardContent>
-         { (props.post.comments) ? <Box> <Typography> coments: </Typography>
-        <Typography>{props.post.comments.length}</Typography></Box> : null }
-      </Card>
+      <Link
+        className={classes.Link}
+        to={`/post/${props.post.id}`}
+        textDecoration="none"
+        content={props}
+      >
+        <Card className={classes.Card} id={props.post.id}>
+          <CardContent>
+            <Typography>title:</Typography>
+            <Typography>{props.post.title}</Typography>
+          </CardContent>
+          <CardContent>
+            <Typography>description:</Typography>
+            <Typography>{props.post.description}</Typography>
+          </CardContent>
+          {props.post.comments ? (
+            <Box>
+              {" "}
+              <Typography> coments: </Typography>
+              <Typography>{props.post.comments.length}</Typography>
+            </Box>
+          ) : null}
+        </Card>
+      </Link>
     </Box>
   );
 };

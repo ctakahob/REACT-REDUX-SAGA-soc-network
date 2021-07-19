@@ -18,24 +18,21 @@ const Profile = () => {
   });
   console.log(profile.posts, "posts");
   const useStyles = makeStyles({
-    Main: {
-    },
+    Main: {},
     User: {
-      position: 'relative',
-      margin:20,
+      position: "relative",
+      margin: 20,
       width: 500,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      
     },
-    Posts:{
+    Posts: {
       display: "flex",
-      flexDirection: 'column',
+      flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
-    }
- 
+    },
   });
 
   const classes = useStyles();
@@ -44,18 +41,21 @@ const Profile = () => {
     <Box className={classes.Main}>
       <Header />
       <Box className={classes.Posts}>
-      <Paper elevation={11} className={classes.User}>
-        <Avatar
-          alt="Remy Sharp"
-          src="https://api.memegen.link/images/doge/such_meme/very_skill.png"
-          ml={0}
-        />
-        <Box>
-          <Typography variant="h5" color="textSecondary"> Email: {profile.email} </Typography>
-          <Typography variant="h5"> user ID: {profile.id} </Typography>
-        </Box>
-      </Paper>
-      
+        <Paper elevation={11} className={classes.User}>
+          <Avatar
+            alt="Remy Sharp"
+            src="https://api.memegen.link/images/doge/such_meme/very_skill.png"
+            ml={0}
+          />
+          <Box>
+            <Typography variant="h5" color="textSecondary">
+              {" "}
+              Email: {profile.email}{" "}
+            </Typography>
+            <Typography variant="h5"> user ID: {profile.id} </Typography>
+          </Box>
+        </Paper>
+
         <Typography variant="h4"> User {profile.email} All posts:</Typography>
         {profile.posts ? (
           profile.posts.map((post) => <Post post={post} key={post.id} />)

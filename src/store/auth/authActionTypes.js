@@ -12,6 +12,8 @@ const userActionTypes = {
   ADD_POST_REQUEST: "ADD_POST_REQUEST",
   REQUEST_PROFILE: "REQUEST_PROFILE",
   FETCH_PROFILE: "FETCH_PROFILE",
+  REQUEST_POST: "REQUEST_POST",
+  FETCH_POST: "FETCH_POST",
 };
 
 export default userActionTypes;
