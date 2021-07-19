@@ -23,7 +23,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return { ...state, userBody: action.payload };
 
     case types.FETCH_POST:
-      return { ...state, currentPost: action.payload };
+      return { ...state, currentPost: action.post };
 
     case types.LOG_IN_FAILURE:
     case types.REGISTER_FAILURE:

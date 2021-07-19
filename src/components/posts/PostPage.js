@@ -1,27 +1,38 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPostToId } from "../../store/auth/authActions";
-import { makeStyles, Box, TextField, Button } from "@material-ui/core/";
+import { makeStyles, Box, Typography, Button, Card } from "@material-ui/core/";
 import Header from "../Header";
 
 const PostPage = (props) => {
-  const [post, setPost] = useState({ title: "", description: "" });
+  const [post, setPost] = useState({
+    title: "",
+    description: "",
+    showComments: false,
+  });
   const profile = useSelector((state) => state.auth.userBody);
   const currentPost = useSelector((state) => state.auth.currentPost);
   const dispatch = useDispatch();
   const path = props.history.location.pathname;
+  let num = parseInt(path.match(/\d+/));
 
   useEffect(() => {
-    if (currentPost) {
+    if (!Object.keys(currentPost).length) {
       dispatch(getPostToId(path));
-      console.log(currentPost);
     } else {
-      console.log("Profile get!");
+      console.log("POST get!");
+    }
+    if (num !== currentPost.id) {
+      dispatch(getPostToId(path));
+     const returnDefaul = () =>  {return setPost ({...post, showComments: false})}
+    } else {
+      console.log("Current post ok");
     }
   });
+  const showCommentaries = () => {
+    setPost ({...post, showComments: true})
+  }
 
-  console.log("link :", path);
-  console.log("Props Content :", props);
   const handleChange = (e) =>
     setPost({ ...post, [e.target.name]: e.target.value.trim() });
 
@@ -35,28 +46,31 @@ const PostPage = (props) => {
   return (
     <Box className={classes.Box}>
       <Header />
-      <TextField
-        label="input Post title"
-        variant="filled"
-        name="title"
-        type="text"
-        onChange={handleChange}
-      ></TextField>
-      <TextField
-        label="input Post discription"
-        variant="filled"
-        name="description"
-        type="text"
-        onChange={handleChange}
-      ></TextField>
+      <Card>
+        {currentPost ? (
+          <Box>
+            <Typography>Title: {currentPost.title},</Typography>
+            <Typography> discription: {currentPost.description}</Typography>
+            <Typography>user ID: {currentPost.user_id}</Typography>
+          </Box>
+        ) : (
+          <Typography>something went wrong</Typography>
+        )}
+      </Card>
+
       <Button
-        // onClick={handleSubmit}
+        onClick={showCommentaries}
         className={classes.button}
         variant="contained"
         color="primary"
       >
-        Add post
+        Show Comments
       </Button>
+      {/* <Box>
+        {post.showComments ?   {posts.map((post) => (
+          <Post post={post} key={post.id} />
+        ))} : null }
+      </Box> */}
     </Box>
   );
 };
