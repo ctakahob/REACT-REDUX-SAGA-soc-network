@@ -1,10 +1,16 @@
 import React, { useEffect } from "react";
 import Post from "./Post";
 import Header from "../Header";
-import { Paper, makeStyles, Box } from "@material-ui/core/";
-import { fetchPosts } from "../../store/auth/authActions";
+import {
+  Paper,
+  makeStyles,
+  Box,
+  CircularProgress,
+  Typography,
+} from "@material-ui/core/";
+import { fetchPosts, requestProfile } from "../../store/auth/authActions";
 import { useDispatch, useSelector, connect } from "react-redux";
-import Postform from "./AddPostForm";
+import Postform from "./AddForms/AddPostForm";
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -13,6 +19,9 @@ const Main = () => {
   useEffect(() => {
     if (!posts.length) {
       dispatch(fetchPosts());
+      dispatch(requestProfile());
+    } else {
+      console.log("App load");
     }
   });
   const useStyles = makeStyles({
@@ -24,7 +33,8 @@ const Main = () => {
       color: "white",
       height: 48,
       padding: "0 30px",
-      width: 150,
+      width: 400,
+      textAlign: "center",
     },
     wrapper: {
       display: "flex",
@@ -39,12 +49,18 @@ const Main = () => {
     <Box className={classes.wrapper}>
       <Header />
       <Postform />
-      <Paper className={classes.root}>counter All posts : {posts.length}</Paper>
-      <Box>
-        {posts.map((post) => (
-          <Post post={post} key={post.id} />
-        ))}
-      </Box>
+      <Paper className={classes.root}>
+        <Typography variant="h5">counter All posts : {posts.length}</Typography>
+      </Paper>
+      {posts.length ? (
+        <Box>
+          {posts.map((post) => (
+            <Post post={post} key={post.id} />
+          ))}
+        </Box>
+      ) : (
+        <CircularProgress color="secondary" />
+      )}
     </Box>
   );
 };

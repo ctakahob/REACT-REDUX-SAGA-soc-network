@@ -25,8 +25,18 @@ export const addNewPost = (post) => ({
   payload: post,
 });
 
+export const addNewComents = (coments) => ({
+  type: types.ADD_NEW_COMMENTS,
+  payload: coments,
+});
+
 export const addRequestPost = (post) => ({
   type: types.ADD_POST_REQUEST,
+  payload: post,
+});
+
+export const putCurrentPost = (post) => ({
+  type: types.REQUEST_PUT_POST,
   payload: post,
 });
 

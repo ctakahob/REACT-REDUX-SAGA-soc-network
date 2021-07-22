@@ -23,7 +23,7 @@ const Header = () => {
           to="/"
           activeStyle={{
             fontWeight: "bold",
-            color: "green",
+            color: "black",
           }}
         >
           main page

@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addRequestPost } from "../../store/auth/authActions";
+import { addRequestPost } from "../../../store/auth/authActions";
 import { makeStyles, Box, TextField, Button } from "@material-ui/core/";
 
-const PostForm = (props) => {
-  const [post, setPost] = useState({ title: "", description: "" });
+const PostForm = () => {
+  const initialState = { title: "", description: "" };
+  const [post, setPost] = useState(initialState);
 
   const dispatch = useDispatch();
 
@@ -14,6 +15,7 @@ const PostForm = (props) => {
   const handleSubmit = (e) => {
     dispatch(addRequestPost(post));
     e.preventDefault();
+    setPost(initialState);
   };
 
   const useStyles = makeStyles({
@@ -28,6 +30,7 @@ const PostForm = (props) => {
         variant="filled"
         name="title"
         type="text"
+        value={post.title}
         onChange={handleChange}
       ></TextField>
       <TextField
@@ -35,9 +38,11 @@ const PostForm = (props) => {
         variant="filled"
         name="description"
         type="text"
+        value={post.description}
         onChange={handleChange}
       ></TextField>
       <Button
+        disabled={post.title ? false : true}
         onClick={handleSubmit}
         className={classes.button}
         variant="contained"

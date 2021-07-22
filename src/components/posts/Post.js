@@ -12,7 +12,7 @@ const Post = (props) => {
   const useStyles = makeStyles((theme) => ({
     Box: { textAlign: "center", margin: 0 },
     Card: {
-      minWidth: 200,
+      minWidth: 450,
       margin: 5,
       boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
     },
@@ -36,18 +36,18 @@ const Post = (props) => {
       >
         <Card className={classes.Card} id={props.post.id}>
           <CardContent>
-            <Typography>title:</Typography>
-            <Typography>{props.post.title}</Typography>
+            <Typography variant="h4">title:</Typography>
+            <Typography variant="h6">{props.post.title}</Typography>
           </CardContent>
           <CardContent>
-            <Typography>description:</Typography>
-            <Typography>{props.post.description}</Typography>
+            <Typography variant="h4">description:</Typography>
+            <Typography variant="h6">{props.post.description}</Typography>
           </CardContent>
           {props.post.comments ? (
             <Box>
               {" "}
-              <Typography> coments: </Typography>
-              <Typography>{props.post.comments.length}</Typography>
+              <Typography variant="h4"> coments: </Typography>
+              <Typography variant="h6">{props.post.comments.length}</Typography>
             </Box>
           ) : null}
         </Card>

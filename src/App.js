@@ -14,11 +14,13 @@ import {
 
 function App() {
   const auth = useSelector((state) => state.auth);
+  const log = localStorage.getItem("Authorization");
+  console.log("Authorization:", auth.isLogined);
 
   return (
     <Router>
       <div className="App">
-        {!auth.isLogined ? <Redirect to="/log_in" /> : <Redirect to="/" />}
+        {log ? <Redirect to="/" /> : <Redirect to="/log_in" />}
         <Switch>
           <Route exact path="/" component={Main}></Route>
           <Route path="/log_in" component={LogIn}></Route>

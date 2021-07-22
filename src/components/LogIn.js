@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Input, Button, Paper, makeStyles } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Input,
+  Button,
+  Paper,
+  makeStyles,
+  Typography,
+  Box,
+} from "@material-ui/core";
 import { logInStart } from "../store/auth/authActions";
 import { Link } from "react-router-dom";
 
 const LogIn = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-
+  const error = useSelector((state) => state.auth.error);
   const dispatch = useDispatch();
 
   const useStyles = makeStyles((theme) => ({
@@ -33,7 +40,9 @@ const LogIn = () => {
   return (
     <Paper className={classes.paper}>
       <form onSubmit={handleSubmit}>
-        <h2>LOGIN</h2>
+        <Typography variant="h5" color="primary">
+          LOGIN
+        </Typography>
         <label>
           <Input
             placeholder="Enter your email"
@@ -57,7 +66,25 @@ const LogIn = () => {
           Log In
         </Button>
       </form>
-      <Link to="/sign_up">"Don't have an account yet? Sign Up"</Link>
+      <Link to="/sign_up">
+        {" "}
+        <Typography variant="overline" color="inherit">
+          "Don't have an account yet? Sign Up"
+        </Typography>{" "}
+      </Link>
+      {error ? (
+        <Box>
+          {" "}
+          <Typography variant="overline" color="inherit">
+            {" "}
+            {error.response.data.message ? (
+              <b>{error.response.data.message}</b>
+            ) : (
+              <b>{error.response.data.errors[0].message}</b>
+            )}
+          </Typography>
+        </Box>
+      ) : null}
     </Paper>
   );
 };

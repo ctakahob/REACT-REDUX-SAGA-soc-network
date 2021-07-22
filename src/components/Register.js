@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { Input, Button, Paper, makeStyles } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  Input,
+  Button,
+  Paper,
+  makeStyles,
+  Typography,
+  Box,
+} from "@material-ui/core";
 import { registerStart } from "../store/auth/authActions";
 import { Link } from "react-router-dom";
 
 const Register = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-
+  const error = useSelector((state) => state.auth.error);
   const dispatch = useDispatch();
 
   const handleChange = (e) =>
@@ -32,7 +39,9 @@ const Register = () => {
   return (
     <Paper className={classes.paper}>
       <form onSubmit={handleSubmit}>
-        <h2>REGISTER</h2>
+        <Typography variant="h5" color="secondary">
+          REGISTER
+        </Typography>
         <label>
           <Input
             placeholder="Enter your email"
@@ -40,6 +49,7 @@ const Register = () => {
             type="text"
             value={credentials.email}
             onChange={handleChange}
+            color="secondary"
           />
         </label>
         <label>
@@ -49,15 +59,33 @@ const Register = () => {
             name="password"
             type="password"
             placeholder="Enter your password"
+            color="secondary"
             value={credentials.password}
             onChange={handleChange}
           />
         </label>
-        <Button variant="contained" color="primary" type="submit">
+        <Button variant="contained" color="secondary" type="submit">
           confirm
         </Button>
       </form>
-      <Link to="/">" Already have an account? Sign in"</Link>
+      <Link to="/log_in">
+        <Typography variant="overline" color="secondary">
+          "Already have an account? Sign in"
+        </Typography>
+      </Link>
+      {error ? (
+        <Box>
+          {" "}
+          <Typography variant="overline" color="inherit">
+            {" "}
+            {error.response.data.message ? (
+              <b>{error.response.data.message}</b>
+            ) : (
+              <b>{error.response.data.errors[0].message}</b>
+            )}
+          </Typography>
+        </Box>
+      ) : null}
     </Paper>
   );
 };

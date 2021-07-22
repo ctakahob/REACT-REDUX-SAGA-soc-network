@@ -1,6 +1,13 @@
 import { React, useEffect } from "react";
 import Header from "../Header";
-import { makeStyles, Box, Typography, Avatar, Paper } from "@material-ui/core/";
+import {
+  makeStyles,
+  Box,
+  Typography,
+  Avatar,
+  Paper,
+  CircularProgress,
+} from "@material-ui/core/";
 import { useDispatch, useSelector } from "react-redux";
 import { requestProfile } from "../../store/auth/authActions";
 import Post from "../posts/Post";
@@ -55,12 +62,10 @@ const Profile = () => {
             <Typography variant="h5"> user ID: {profile.id} </Typography>
           </Box>
         </Paper>
-
-        <Typography variant="h4"> User {profile.email} All posts:</Typography>
         {profile.posts ? (
           profile.posts.map((post) => <Post post={post} key={post.id} />)
         ) : (
-          <Typography> Posts empety </Typography>
+          <CircularProgress color="secondary" />
         )}
       </Box>
     </Box>

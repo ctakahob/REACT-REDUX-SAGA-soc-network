@@ -26,11 +26,10 @@ const logIn = async (email, password) => {
 };
 
 const register = async (email, password) => {
-  const response = await axios.post(loginUrl + "/auth/sign_up", {
+  await axios.post(loginUrl + "/auth/sign_up", {
     email,
     password,
   });
-  console.log(response);
 };
 
 const getAllPosts = async () => {
@@ -42,15 +41,16 @@ const getAllPosts = async () => {
     },
   };
   const response = await axios.get(loginUrl + "/posts/all", config);
-  console.log(response.data);
-  return response.data;
+  return response.data.reverse();
 };
 
 export function* sagaWatcher() {
   yield takeEvery(types.REQUEST_POSTS, sagaWorker);
   yield takeEvery(types.REQUEST_PROFILE, profileWorker);
   yield takeEvery(types.ADD_POST_REQUEST, postWorker);
+  yield takeEvery(types.ADD_NEW_COMMENTS, commentWorker);
   yield takeEvery(types.REQUEST_POST, postRequestWorker);
+  yield takeEvery(types.REQUEST_PUT_POST, postPutWorker);
 }
 
 function* sagaWorker() {
@@ -71,7 +71,6 @@ const getProfile = async () => {
     },
   };
   const response = await axios.get(loginUrl + "/user/profile", config);
-  console.log(response.data);
   return response.data;
 };
 
@@ -94,24 +93,45 @@ const addPost = async (title, description) => {
   const response = await axios.post(loginUrl + "/posts/add", body, {
     headers: { Authorization: key },
   });
-  console.log(response.data);
+
   return response.data;
 };
 
 function* postWorker({ payload: { title, description } }) {
   try {
-    console.log("Start");
     yield addPost(title, description);
-    console.log("add post");
     yield put({ type: types.REQUEST_POSTS });
-    console.log("REQUEST_POSTS");
+  } catch (error) {
+    return console.error;
+  }
+}
+
+const addComment = async (title, post_id) => {
+  let jwtKey = localStorage.getItem("Authorization");
+  let key = JSON.parse(jwtKey);
+  let body = {
+    title,
+    post_id,
+  };
+  const response = await axios.post(loginUrl + "/comments/add", body, {
+    headers: { Authorization: key },
+  });
+  return console.log(response);
+};
+
+function* commentWorker({ payload: { title, post_id } }) {
+  try {
+    yield console.log(title, post_id);
+    yield addComment(title, post_id);
+    const payload = post_id;
+    console.log(payload);
+    yield put({ type: types.REQUEST_POST, payload });
   } catch (error) {
     return console.error;
   }
 }
 
 const getPost = async (path) => {
-  console.log(path);
   let jwtKey = localStorage.getItem("Authorization");
   let key = JSON.parse(jwtKey);
   let config = {
@@ -119,20 +139,50 @@ const getPost = async (path) => {
       Authorization: key,
     },
   };
-  const response = await axios.get(loginUrl + "/posts" + path, config);
-  console.log(response);
+  const response = await axios.get(loginUrl + "/posts/post/" + path, config);
   return response.data;
 };
 
 function* postRequestWorker({ payload }) {
   try {
-    console.log("Start", payload);
     const post = yield getPost(payload);
-    console.log("post Request", post);
     yield put({ type: types.FETCH_POST, post });
-    console.log("FETCH_ONE_POST :", post);
   } catch (error) {
     return console.error;
+  }
+}
+
+const postPutPost = async (post_id, title, description) => {
+  let jwtKey = localStorage.getItem("Authorization");
+  let key = JSON.parse(jwtKey);
+  let body = {
+    title,
+    description,
+  };
+  let config = {
+    headers: {
+      Authorization: key,
+    },
+  };
+  const response = await axios.put(
+    loginUrl + "/posts/post/" + post_id,
+    body,
+    config
+  );
+  return console.log(response);
+};
+
+function* postPutWorker({ payload: { post_id, title, description } }) {
+  try {
+    yield postPutPost(post_id, title, description);
+    console.log("Completed PUTTT");
+    const payload = post_id;
+    console.log(payload);
+    yield put({ type: types.REQUEST_POST, payload });
+    yield put({ type: types.REQUEST_POSTS });
+    yield put({ type: types.REQUEST_PROFILE });
+  } catch (error) {
+    console.log(error);
   }
 }
 

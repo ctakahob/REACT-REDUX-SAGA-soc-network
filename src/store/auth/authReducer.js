@@ -16,6 +16,10 @@ const authReducer = (state = INITIAL_STATE, action) => {
         isLogined: action.payload,
         error: null,
       };
+
+    case types.LOG_IN_WITH_LOCAL_STORAGE:
+      return { ...state, isLogined: true };
+
     case types.FETCH_POSTS:
       return { ...state, allPosts: action.payload };
 
@@ -33,7 +37,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       };
     case types.LOG_OUT:
       localStorage.clear();
-      return INITIAL_STATE;
+      return { ...state, isLogined: false };
     default:
       return state;
   }
