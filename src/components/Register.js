@@ -64,7 +64,12 @@ const Register = () => {
             onChange={handleChange}
           />
         </label>
-        <Button variant="contained" color="secondary" type="submit">
+        <Button
+          variant="contained"
+          color="secondary"
+          type="submit"
+          disabled={credentials.email ? false : true}
+        >
           confirm
         </Button>
       </form>

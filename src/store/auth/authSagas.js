@@ -175,9 +175,7 @@ const postPutPost = async (post_id, title, description) => {
 function* postPutWorker({ payload: { post_id, title, description } }) {
   try {
     yield postPutPost(post_id, title, description);
-    console.log("Completed PUTTT");
     const payload = post_id;
-    console.log(payload);
     yield put({ type: types.REQUEST_POST, payload });
     yield put({ type: types.REQUEST_POSTS });
     yield put({ type: types.REQUEST_PROFILE });

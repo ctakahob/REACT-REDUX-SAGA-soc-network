@@ -20,8 +20,6 @@ const Main = () => {
     if (!posts.length) {
       dispatch(fetchPosts());
       dispatch(requestProfile());
-    } else {
-      console.log("App load");
     }
   });
   const useStyles = makeStyles({

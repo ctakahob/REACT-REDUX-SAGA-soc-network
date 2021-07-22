@@ -35,7 +35,7 @@ export const SetPostForm = (props) => {
     e.preventDefault();
     dispatch(putCurrentPost(post));
   };
-  console.log(post);
+
   const useStyles = makeStyles({
     TextField: { margin: 10 },
     Button: {

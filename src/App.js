@@ -15,7 +15,11 @@ import {
 function App() {
   const auth = useSelector((state) => state.auth);
   const log = localStorage.getItem("Authorization");
-  console.log("Authorization:", auth.isLogined);
+  if (auth.isLogined) {
+    console.log("start");
+  } else {
+    console.log("await start");
+  }
 
   return (
     <Router>

@@ -14,16 +14,14 @@ import Post from "../posts/Post";
 
 const Profile = () => {
   const profile = useSelector((state) => state.auth.userBody);
-  console.log(profile);
+
   const dispatch = useDispatch();
   useEffect(() => {
     if (!Object.keys(profile).length) {
       dispatch(requestProfile());
-    } else {
-      console.log("Profile get!");
     }
   });
-  console.log(profile.posts, "posts");
+
   const useStyles = makeStyles({
     Main: {},
     User: {

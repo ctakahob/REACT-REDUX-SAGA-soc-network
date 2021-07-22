@@ -29,13 +29,10 @@ const PostPage = (props) => {
   useEffect(() => {
     if (!Object.keys(currentPost).length) {
       dispatch(getPostToId(num));
-    } else {
-      console.log("POST get!");
     }
+
     if (num !== currentPost.id) {
       dispatch(getPostToId(num));
-    } else {
-      console.log("Current post ok");
     }
   });
 

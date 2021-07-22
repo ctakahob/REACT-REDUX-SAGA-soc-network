@@ -11,7 +11,6 @@ export const Comments = (props) => {
       boxShadow: "0 3px 5px 2px rgba(0,0,80,0.4)",
     },
   }));
-  console.log("props.comment", props);
   const classes = useStyles();
   const newDate = moment(props.createdAt).format("DD-MM-YYYY");
   return (

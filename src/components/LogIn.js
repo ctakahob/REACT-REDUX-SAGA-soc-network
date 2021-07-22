@@ -62,7 +62,12 @@ const LogIn = () => {
             onChange={handleChange}
           />
         </label>
-        <Button variant="contained" color="primary" type="submit">
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          disabled={credentials.email ? false : true}
+        >
           Log In
         </Button>
       </form>
