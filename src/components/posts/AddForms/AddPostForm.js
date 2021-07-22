@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addRequestPost } from "../../../store/auth/authActions";
+import { addRequestPost } from "../../../store/post/postAction";
 import { makeStyles, Box, TextField, Button } from "@material-ui/core/";
 
 const PostForm = () => {

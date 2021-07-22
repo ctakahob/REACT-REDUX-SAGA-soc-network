@@ -8,14 +8,15 @@ import {
   CircularProgress,
   Typography,
 } from "@material-ui/core/";
-import { fetchPosts, requestProfile } from "../../store/auth/authActions";
+import { fetchPosts, requestProfile } from "../../store/post/postAction";
 import { useDispatch, useSelector, connect } from "react-redux";
 import Postform from "./AddForms/AddPostForm";
 
 const Main = () => {
   const dispatch = useDispatch();
 
-  const posts = useSelector((state) => state.auth.allPosts);
+  const posts = useSelector((state) => state.post.allPosts);
+  console.log("POSTSSS", posts);
   useEffect(() => {
     if (!posts.length) {
       dispatch(fetchPosts());
@@ -65,7 +66,7 @@ const Main = () => {
 
 const mapStateToProps = function (state) {
   return {
-    Postform: state.auth.allPosts,
+    Postform: state.post.allPosts,
   };
 };
 

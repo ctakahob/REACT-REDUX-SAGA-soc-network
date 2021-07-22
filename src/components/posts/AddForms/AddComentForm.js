@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addNewComents } from "../../../store/auth/authActions";
+import { addNewComents } from "../../../store/post/postAction";
 import { makeStyles, Box, TextField, Button } from "@material-ui/core/";
 
 export const AddCommentForm = (props) => {

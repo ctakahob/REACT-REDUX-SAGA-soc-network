@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPostToId } from "../../store/auth/authActions";
+import { getPostToId } from "../../store/post/postAction";
 import { AddCommentForm } from "./AddForms/AddComentForm";
 import { Comments } from "./Comments";
 import { SetPostForm } from "../posts/AddForms/SetPostForm";
@@ -20,8 +20,8 @@ const PostPage = (props) => {
     description: "",
     showComments: false,
   });
-  const profileId = useSelector((state) => state.auth.userBody.id);
-  const currentPost = useSelector((state) => state.auth.currentPost);
+  const profileId = useSelector((state) => state.post.userBody.id);
+  const currentPost = useSelector((state) => state.post.currentPost);
   const dispatch = useDispatch();
   const path = props.history.location.pathname;
   let num = parseInt(path.match(/\d+/));

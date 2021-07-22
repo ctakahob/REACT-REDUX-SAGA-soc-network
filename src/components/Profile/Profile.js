@@ -9,11 +9,11 @@ import {
   CircularProgress,
 } from "@material-ui/core/";
 import { useDispatch, useSelector } from "react-redux";
-import { requestProfile } from "../../store/auth/authActions";
+import { requestProfile } from "../../store/post/postAction";
 import Post from "../posts/Post";
 
 const Profile = () => {
-  const profile = useSelector((state) => state.auth.userBody);
+  const profile = useSelector((state) => state.post.userBody);
 
   const dispatch = useDispatch();
   useEffect(() => {
