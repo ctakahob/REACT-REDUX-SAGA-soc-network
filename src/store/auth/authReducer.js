@@ -3,9 +3,6 @@ import types from "./authActionTypes";
 const INITIAL_STATE = {
   isLogined: false,
   error: null,
-  // allPosts: [],
-  // userBody: {},
-  // currentPost: {},
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -27,7 +24,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       };
     case types.LOG_OUT:
       localStorage.clear();
-      return INITIAL_STATE;
+      return { ...state, isLogined: false, error: null };
     default:
       return state;
   }
