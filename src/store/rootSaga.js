@@ -1,4 +1,4 @@
-import { all, call } from "redux-saga/effects";
+import { all } from "redux-saga/effects";
 
 import { authSagas } from "./auth/authSagas";
 import { postSagas } from "./post/postSaga";

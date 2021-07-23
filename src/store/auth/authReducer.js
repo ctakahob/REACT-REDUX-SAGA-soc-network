@@ -27,7 +27,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       };
     case types.LOG_OUT:
       localStorage.clear();
-      return { ...state, isLogined: false };
+      return INITIAL_STATE;
     default:
       return state;
   }

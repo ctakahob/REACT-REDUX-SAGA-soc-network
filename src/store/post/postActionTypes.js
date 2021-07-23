@@ -9,6 +9,7 @@ const userActionTypes = {
   FETCH_POST: "FETCH_POST",
   ADD_NEW_COMMENTS: "ADD_NEW_COMMENTS",
   REQUEST_PUT_POST: "REQUEST_PUT_POST",
+  LOG_OUT: "LOG_OUT",
 };
 
 export default userActionTypes;

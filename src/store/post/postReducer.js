@@ -18,6 +18,8 @@ const postReducer = (state = INITIAL_STATE, action) => {
       return { ...state, currentPost: action.post };
     default:
       return state;
+    case types.LOG_OUT:
+      return INITIAL_STATE;
   }
 };
 
